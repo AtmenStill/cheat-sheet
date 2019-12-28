@@ -1,0 +1,500 @@
+Основы:
+<?php
+
+
+?>
+
+include_once "something.php" - включить в файл этот файл и его переменные
+@include_once - не выдавать ошибок в случае нерабочего кода
+
+require "file" - выдаст ошибку, остановка программы если файла нет
+include "file" - расскажет об ошибке в логах, но будет работать дальше
+
+require и include выдадут ошибку, если данные файлы уже подключены.
+include_once и require_once - файл подключается, либо если уже подключен - просто пропускается
+
+// - комментарий
+/* - многострочный комментарий */
+# - тоже однострочный комментарий
+echo - надпись, причем можно прямо в надписи написать переменную $тудысюды - и она отобразится прямо в тексте в виде значения (но только если кавычки двойные; одинарные кавычки дают написание переменной как есть)
+print_r($expression, $return = false); - выдаст массив полностью, распечатает его (потому что echo с массивами не работает), return позволяет вывести либо в браузер, либо сохранить это в виде строки (через присвоение return); является отладочной
+var_dump($expression, $return = false); - выдает не только массив, но и типы данных его частей; является отладочной
+\' - вставить символ '
+\\ - вставить символ \
+
+Для двойных кавычек:
+\n - новая строка
+\r - возврат каретки
+\t - табуляция
+\$ - вставить символ $ чтобы не было переменной
+\xNN - вместо NN шеснадцатиричный код, сработает
+
+{$var}
+${var} - переменная внутри строки (кавычек)
+
+
+
+
+ПЕРЕМЕННЫЕ:
+Чувствительны к регистру
+
+Объявление - $variable
+global $variable - внутри функции объявить что переменная становится глобальной
+объявление ОБЪЕКТА - new $variable
+Ссылка (жесткая) - $var1 = & var2
+И теперь все, что произойдет с $var1, изменит значение и $var2
+Ссылка (жесткая) на массив - $var = & $massiv['element1']
+И теперь все, что произойдет с $var, изменит значение этого элемента массива
+
+static $kers = 0 - при первом объявлении она действительно будет 0, потом будет меняться но не объявляться снова
+
+Ссылка (символическая)
+$var1 = something
+$var2 = "var1"
+$$var2 будет равно "something"
+$$var2 = not something  - теперь $var1 равен not something
+
+
+Константы:
+Есть предопределенные, вроде ОСи на которой запущен ПХП и прочего
+Есть создаваемые
+Создать константу - define($name,$value,$case_sen = true) где $name уже должно быть переменной или просто значением для имени, и то же самое с value
+
+Виды данных:
+integer
+double
+string (ограничена 2гб, техническое ограничение самого языка на 128 мб)
+array
+object
+resource (???)
+null
+callable
+
+
+
+
+МАССИВЫ:
+$massiv = array('element1=>'something something', 'element2'=>'not something');
+
+$massiv = [];
+$massiv['key1']='value1'
+
+Двумерный массив
+$massiv['one'] = ['who' => 'you', 'when' => 'now', 'how' => 'your mom']
+
+$Massiv1 = $massiv2 + $massiv3 - слияние
+
+
+
+
+
+
+СТРОКИ:
+Конкатенация - "ляляля"."жужужу"
+
+strlen() - длина строки, считает количество байт
+mb_strlen - аналогично, считает количество символов независимо от байт (для русских кодировок)
+
+strpos($string, $symbol, $from=0) - поиск символа в строке, начиная с Х символа; возвращает первое встречание символа
+strrpos($string, $symbol, $from=0) - поиск символа в строке, начиная с Х символа; возвращает ПОСЛЕДНЕЕ встречание символа
+
+strcmp($string1, $string2) - возвращает -1 если первая строка больше второй, 0 если равны, 1 если вторая больше; сравнивает каждый символ по месту в ASCII и смотрит какой больше в сумме
+strcasecmp($string1, $string2) - то же самое, но не учитывается регистр символов
+КИРИЛЛИЦА НЕ ПОДДЕРЖИВАЕТСЯ
+
+trim($string, $symbols) - обрезать строку, $symbols в кавычках указываются символы которые надо удалить с концов строки (по умолчанию - пробел на концах)
+
+substr($string, $start, $length) - вырезать сабстринг из строки, откуда начать и какая длинна
+mb_substr - то же самое, но учитывает двухбайтные символы (русские тоже)
+
+str_replace(smbols_from, $symbols_to, $var, $count) - заменить символы $symbols_from в строке $var на $symbols_to: $count определяет количество замен в строке (return-ит их в итоге)
+str_ireplace - то же самое, но не учитывается регистр
+substr_replace($str, $symbs_to, $start, $length) - в строке str заменяется от $start, заменяется на $symbs_to, $length - сколько символов от старта удалить
+
+strtolower($string) - все в нижнем регистре
+
+strtoupper($string) - все в верхнем регистре
+
+ucfirst($string) - сделать первую букву заглавной
+
+md5($string, $raw_output=false) перевести в хЕш код, false - 32 символа, true - 16 символов
+
+hash($alg, $string, $raw_output=false) - на месте $alg можно подставить один из 20+ алгоритмов кодирования
+
+
+
+
+
+
+MATHS:
+var++ -first we do something with variable, then we increment it
+var-- - аналогично, но декремент
+++var - сначала инкремент, потом var используется в действии
+--var - аналогично, но декремент
+mt_rand(0, 15) - возвращает случайное число от 0 до 15
+
+
+round($val, $precision=0, mode=PHP_ROUND_HALF_UP) - val is the value to round, precision - to how many digits to round
+modes:
+PHP_ROUND_HALF_UP – в большую сторону;
+- PHP_ROUND_HALF_DOWN – в меньшую сторону;
+- PHP_ROUND_HALF_EVEN – до ближайшего четного числа;
+- PHP_ROUND_HALF_ODD – до ближайшего нечетного числа.
+
+
+ceil($var) - ceil round float number to int, returns int
+
+floor($var) - the same
+
+
+
+
+abs($var) - absolute value (module) of the number
+
+
+
+Randomise:
+rand(), srand() - not random enough
+
+mt_rand($min=MIN, $max=MAX) - makes random number (one) from random list of numbers (min to max)
+mt_srand($seed) - randomly generates random number based on the given seed
+random_int($min=PHP_INT_MIN, $max=PHP_INT_MAX) - will give you random number\
+
+Convert to different base:
+base_convert($number, $base1, $base2) - convert number from base1 to base2 (min 2 max 36)
+Convert to decimal from binary, octa, heximal
+bindec(), octdec(), hexdec()
+Vice-versa
+ decbin(), decoct(), dechex().
+
+
+min(var1, var2 etc) - minimal number from the list
+max(var1, var2 etc) - maximal number from the list
+
+
+pow(base, exp) - base to exp power
+sqrt(var) - square root
+log(var) - logarithm by base 10
+exp(var) - Euler number to var power
+
+
+- M_PI – число «?»;
+- M_E – число «е»;
+- M_LOG2E – log2(e);
+- M_LOG10E – lg(e);
+- M_LN2 – ln(2);
+- M_LN10 – ln(10);
+- M_SQRT2 – квадратный корень из 2;
+- M_LNPI – ln(?);
+- M_EULER – постоянная Эйлера
+
+
+ЦИКЛЫ:
+if(kek) {
+woot;}else{woot2;}
+
+Либо же
+if(kek) {
+woot;}elseif(keknot){woot2;}else{woot3}
+
+Альтернативный синтаксис:
+if(kek):
+woot1;
+else:
+woot2;
+
+while(kek){
+something;}
+
+while(kek):
+something;
+
+do {
+something}
+while(kek);
+
+for($i=0; $i<=soth; $i++, additional thing, another one thing to do) {
+kek}
+
+for(a) {
+	for(b) {
+		break(1);}} - выход только из цикла b (аналогично, если не указывать число)
+
+for(a) {
+	for(b) {
+		break(2);}} - выход из обоих циклов выше
+
+continue аналогичен, просто посылая нас к следующей итерации
+
+foreach($array as $key => $value) {
+kek} - $key у нас будет принимать значения ключей, а $value - значений
+можно только по значениям:
+foreach($array as $value) {kek}
+
+switch(whatwillbe?) {
+case this1:
+	welp;
+	break;
+case this2:
+	welp;
+	break;
+default:
+	welp;
+	break;
+} - если нет break, то case будет проходиться по всем следующим
+
+switch(anotherone):
+case this1:
+	welp;
+	break;
+case this2:
+	welp;
+	break;
+default:
+	welp;
+	break;
+endswitch;
+
+
+function some($r) {
+	if(kek) return 1;
+	else return $r*some($r-1);
+} - это все рекурсивная функция, позволяющая посчитать что-то если хватает памяти
+
+
+
+
+
+ФУНКЦИИ:
+Объявление:
+function name(argument1=thing1, argument2=thing2) {
+kek;
+return bitch; } - thing1 это значение аргумента1 по умолчанию если он не задан; если в функции нет return то она имеет тип void и просто делает то что нужно
+Можно делать строгие типы данных: function name(int $arg1, string $arg2) {}
+В функции можно делать ссылочные переменные, чтобы работать с переменными:
+function name(&$var1, $var2=3, &$var3) {something;}
+Функция с динамическим количеством переменных:
+function name(...$var) {} - этот "динамический массив" можно прогонять через foreach
+
+
+
+
+
+
+
+
+
+information: 
+phpinfo() - will give off information about current php version into browser
+
+usleep($micro_seconds) - will stop function for some microseconds
+
+sleep($seconds) - will stop function for some seconds
+
+
+var_dump($array) - выдает всю информацию о переменной, что у нее внутри
+
+
+
+
+
+
+
+
+
+
+
+Переменные:
+isset(variable) - выдает boolean, существует ли переменная с таким именем (инициализирована ли она)
+пример - if(isset($new_var)) {
+echo "fuck you";
+}else{
+echo "fuck you not";};
+
+unset(variable) - удалить к херам
+
+defined(string $name); - выдаст существует ли константа
+
+
+
+- is_int()
+Возвращает true, если заданная переменная - целое число.
+- is_double()
+Возвращает true, если заданная переменная относится к вещественному (действительному) типу.
+- is_infinite()
+Возвращает true, если переменная – бесконечное действительное число INF.
+- is_nan()
+Возвращает true, если переменная – недопустимое числовое значение NAN.
+- is_string()
+Возвращает true, если переменная содержит строковое значение.
+- is_numeric()
+Возвращает true, если переменная относится к типу integer или double. Данный оператор рекомендуется к применению вместо is_int() и is_double().
+- is_bool()
+Возвращает true, если переменная – логическое значение true или false
+- is_scalar()
+Возвращает true, если переменная относится к таким типам, как integer, double, boolean или string.
+- is_null()
+Возвращает true, если переменная принимает значение null.
+- is_array()
+Возвращает true, если переменная – ассоциативный массив
+- is_object()
+Возвращает true, если переменная содержит ссылку на объект
+- gettype()
+Возвращает значения integer, double, string, boolean, object, array, null, INF, NAN или unknown type.
+
+Можно также усановить тип переменной
+settype($variable, type) - если невозможно по какой-то причине, возвращает false
+
+- doubleval($var)
+Преобразует переменную к вещественному типу. Есть эквивалентная функция floatval().
+- strval($val)
+Преобразует переменную в строковый тип
+- intval($val[, $base])
+Преобразует переменную в целочисленный тип. В случае указания параметра $base, переводит в соответствующий формат.
+Пример:
+echo intval(“56”); // Выведет сообщение: 56
+echo intval(“56”, 2) // Выведет сообщение: 111000
+
+
+
+
+
+
+
+Дата, время:
+I can set system date, time and timezone on the server.
+Zero Date
+
+date_default_timezone_set() - install timezone inside a script
+
+january 1st, 1970 at Greenwich - is the beginning of time itself in computers
+time() - will give time in seconds since beginning of time
+microtime($as_float=false) - will give precise time in seconds AND milliseconds as above; if as_float = true will return float\double instead of time\mixed
+
+
+date($format, $timestamp) - will give you date; format can have the following letters:
+
+
+
+U
+Количество секунд, прошедших с полуночи 1 января 1970 года
+z
+Номер дня от начала года
+Y
+Год, 4 цифры
+y
+Год, 2 цифры
+F
+Название месяца, например, January, June, September
+m
+Номер месяца
+M
+Название месяца в трехсимвольной аббревиатуре: Jan
+d
+Номер дня в месяце, всегда 2 цифры, где первая может быть 0
+j
+Номер дня в месяце без предваряющего нуля
+w
+День недели, где 0 – воскресенье
+l
+День недели в текстовом виде, например, Monday
+3
+D
+День недели в английском трехсимвольном представлении
+a
+am или pm
+A
+AM или PM
+h
+Часы, 12-часовой формат
+H
+Часы, 24-часовой формат
+i
+Минуты
+s
+Секунды
+S
+Английский числовой суффикс (nd, th и т. п.)
+
+
+Timestamp  - the date itself in any format; If not given, will return current date
+
+
+strtotime - function that will turn words into needed time;
+
+strtotime(date('d.m.Y', timestamp.'+ 10 days')) or something like that - will change the date to a timestamp; further formatting needed.
+
+
+
+
+массивы:
+count($array) - возвращает длинну массива
+
+range($low, $high) - возвращает созданный массив с числами в диапазоне от $low до $high
+
+
+array_merge($main_array, $additional_array)
+
+array_slice($aray, $offset, $length, $pr_keys) - вырезать кусок из массива $array, длинной $lngth, начиная с элемента $offset, pr_keys=true вырезает ключи вместе со значениями (без него остаются только ключи); если $length нету то вырезается все до конца массива.
+
+array_splice($array, $offset, $length, $repl) - из исходного массива удаляется вырезанный подмассив (либо заменяется на $repl), вырезанный возвращается.
+
+
+
+
+array_push($aray, $var1, $var2 и т.д.) - добавить в конец списка $var1 и прочее
+
+array_pop($array) - удаляет и возвращает последний элемент массива
+
+array_shift - аналогично pop, но удаляет и возвращает первый элемент
+
+array_unshift($array, $var1 и т.д.) - добавляет элементы в начало массива, сдвигая другие
+
+
+
+
+
+explode($symbol, $string,[$integer]) - $symbol это символ, по которому разбивается строка, $string - сама строка которую требуется разбить, $integer - сколько разбиений можно делать пока не прекратить
+implode($glue, $list) - $glue это символ или строка между сшиваемыми элементами; $list - список слов который надо сшить
+join($glue, $list) - аналогично implode
+
+
+array_intersect($array1, $array2, $array3 и т.д.) - операция пересечения (возвращает только то, что схоже в этих массивах)
+
+array_diff($array1, $array2, $array3, и т.д.) - разность массивов (возвращает то из $array1 что не встречается в других массивах)
+
+array_unique($array) - returns only unique pairs for one array
+
+
+
+
+
+in_array($val, $array) - возвращает булеан по поиску val в array
+
+shuffle($array) - случайно перемешать ключи и значения массива
+
+array_flip($array) - меняет местами ключи и значения (vice versa)
+
+array_keys($array, $searchVal) - ретурнит отдельный массив-список с ключами массива (searchval - ???)
+array_values($array) - аналогично выше
+
+
+
+
+
+
+
+Сортировка:
+asort($array, $sort_flag) - сортировка по возрастанию
+arsort($array, $sort_flag) - сортировка по убыванию
+ВНИМАНИЕ! Воспринимает все как строки, поэтому будет сортировать в лексиграфическом порядке (например после 2 - 21, 24, потом 3 и 35)
+
+ksort
+krsort - то же самое, что и выше, но по ключам
+
+natsort($array) - естественная сортировка (учет чисел в строках)
+natcasesort -не учитывает регистр
+
+sort($array, $sort_flag) - та же самая сортировка, но для списков
+rsort - аналогично обратное
+

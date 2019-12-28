@@ -1,0 +1,33 @@
+¬ызываетс€:
+
+display: flex;
+
+
+
+
+
+—войства:
+justify-content: flex-start, flex-end, center, space-between, space-around; - объекты в одном р€ду
+
+align-content: flex-start, flex-end, center, space-between, space-around, stretch; - то же самое, но с р€дами (вертикальное выравнивание р€дов)
+
+align-items: flex-start, flex-end, center, baseline, stretch; - вертикальное выравнивание элементов
+
+flex-direction: row, row-reverse, column, column-reverse; (как расположены элементы - р€д или колонка?)
+
+order: 1\2\3 и т.д ??? как это вообще работает? (пор€док, в котором элемент внутри контейнера)
+
+align-self: (align-items things) (да, то же самое что и элайн айтемс, но самого себ€ в отдельности от окружающих контейнеров)
+
+flex-wrap: nowrap (помещаютс€ в один р€д и сплющиваютс€), wrap (поместить на новую строку), wrap-reverse (нова€ строка сверху, стара€ переноситс€ вниз) - как разместить объекты
+
+flex-flow: direction + wrap
+
+flex-grow: 1\2\3 (на сколько делений может вырасти контейнер в сравнении с сосед€ми)
+
+flex-shrink: 1,2,3 - на сколько делений может уменьшитьс€ контейнер
+
+flex-basis: 10px - базовый размер контейнера
+
+flex: grow shink basis
+

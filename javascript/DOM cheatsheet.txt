@@ -1,0 +1,67 @@
+Выбрать элемент:
+getElementById('id')
+getElementsByClassName('className')
+getElementsByTagName('tagName')
+querySelector('something inside-something something:somechild .class')
+querySelectorAll('something inside-something something:somechild .class')
+
+
+
+Изменять элемент:
+element.textContent = ""
+element.innerHTML = "something" or even tags
+element.cloneNode(True\False) - скопировать нод этого тэга: true - скопировать все child nodes внутри этого, false - скопировать только тэг без child
+element.AddEventListener("event", function to call) function(parameter_from_event) { lalalala}
+document.createElement(tagName[options]) - create new element inside of element
+element.appendhild(thisonenodeAbove) - insert that one node as the last child of the element
+element.insertBefore(thisonenodeAbove, beforewhat) - you got it
+element.removeChild(child) - also got it
+element.style.shit = "fuck" - change shit inline style to fuck
+element.setAttribute('style', 'color: blue; background: white') - that's what will it look like
+Also element.getAttribute('id') and element.removeAttribute('id')
+for classes - element.classList.add('class'), classList.remove and classList.toggle
+
+
+
+Узнать что-то:
+element.nodeType - выдает цифру, по которой можно определить тип нода (искать в w3c)
+element.nodeName - выдает тег, в котором находится нод
+element.hasChildNodes - выдает True или False
+
+
+
+EVENT PROPERTIES
+event.properties:
+
+mouse:
+event.clientX - X позиция курсора в данный момент
+event.clientY - Y позиция курсора в данный момент
+event.stopPropagation() - останавливает чтение любого ввода при использовании этого
+
+
+
+
+
+
+EVENTS:
+
+kek = function(paremeter, event) - при подаче в виде kek(par, $event) нужно делать $ чтобы event в kek не был общим event
+
+element.addEventListener('click', processing(event));
+wololo=event
+function processing(wololo) {
+	wololo.target.style.background='red'}
+
+var buttons = document.querySelectorAll('button");
+buttons.forEach(function(button) {button.addEventListener('click', function(e) {alert(button.id); }); });
+
+
+let theGame = function(event) {
+  console.log('Click', event.target.id);
+}
+
+let chosenpics = document.querySelectorAll(".choicepic");
+
+chosenpics.forEach(function(currentPic) {
+  currentPic.addEventListener('click', theGame)
+});

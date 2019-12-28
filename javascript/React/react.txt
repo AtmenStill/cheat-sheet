@@ -1,0 +1,206 @@
+NPM модуль create-react-app
+В папке использовать
+$ create-react-app app-name
+
+
+
+
+СОЗДАНИЕ И ПОДКЛЮЧЕНИЕ КОМПОНЕНТА
+Точка входа - app.js, в ней импортируются все необходимые вещи; в первую очередь react:
+import React from 'react'
+
+В нем вызывается самый главный компонент:
+function App() {
+return (
+	<something>
+
+	</something>
+)}
+
+Или же 
+class App extends Component {
+	render() {
+		return (
+			<div>
+			<div>
+		)
+	}
+}
+
+
+Чтобы создать компонент, нужно создать отдельный файл, в нем подключить react и правильно экспортировать его содержимое:
+export default class Something extends React.Component {
+
+}
+
+В главном файле импортировать его: import Something from './something'
+И вызвать компонент через тег: <Something/>
+
+
+
+
+
+СТРОЕНИЕ КОМПОНЕНТА:
+Старая версия:
+constructor(args) {
+	super(args);
+	this.state = {
+		something: some meaning
+	}
+} - это аналог data из Vue, в нем прописываются вещи изменение которых произведет ререндер
+some_function () {
+	this.setState((previousState) => ({
+		something like new state
+	}))
+} - функции прописываются прямиком внутри компонента, без вызова methods или computed
+render() {
+	<div>
+	{this.state.something}
+	</div>
+} - в конце вызывается рендер разметки компонента
+
+
+Новая версия:
+Подключаем react
+
+
+Классовый (динамический) компонент:
+class ComponentName extends Component {
+	state = {
+		one: one,
+		two: three
+	} - аналог data
+	someFunction = (arg) => {
+	this.setState({one: 'four'}) - setState изменяет часть state, чтобы произошел рендер
+	} - функции вставляются просто так
+	render() {
+		return ()
+	} - непосредственно html код который будет отрендерен
+}
+
+
+
+Функциональный (статический) компонент:
+const ComponentName = (props) => {
+	return (<div></div>)
+}
+
+export default ComponentName
+
+
+
+
+JSX ФУНКЦИИ:
+className = class - вставка классов css
+onClick={} - использовать вставку из кода по нажатию
+onChange={} - при изменении поля
+
+={function.bind(this, arg)} - вызов функции function(arg) {some some arg), через arg можно поменять state
+={() => this.function("Kek")} - тот же самый вызов функции, но может быть менее эффективный
+
+
+
+PROPS:
+props.smth - то, что подается с самим тэгом - <mycomponent smth="kek"/>
+props.children - то, что внутри тега (весь HTML код), <mycomponent>Hello!</mycomponent>
+
+
+ХУКИ:
+import React, {someHook} from 'react'
+
+Для этого компонент должен быть не классовым; но props в него подавать можно
+const app = props => {
+
+	return (something to render)
+}
+
+useState - заменяет state в компоненте; в него подается state, возвращает state и функцию которой можно вызвать измнение (заменяет setState())
+Пример:
+const [myState, mySet] = useState({woot: kek}); mySet полностью перепишет myState, но можно делать множество useState для каждого нужного стэйта
+
+
+useEffect - позволяет использовать lifecycle hooks в функциональных компонентах, т.е. использовать функцию когда меняется какой-то внутренний параметр. Пример:
+useEffect(() => {действия которые предпринять}, [props.something]) где props.something - то, что должно измениться, даже если это компонент
+
+useRef - вызывает Ref (???)
+
+
+
+СТИЛИ И ПОДКЛЮЧАЕМЫЕ ЧАСТИ КОДА:
+Можно подключить стили в файл через import:
+import './Some.css'
+Либо сделать их прямо внутри функции - перед render() указать объект, внутри которого прописать стили:
+const style = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px'
+    } - следует заметить что пишется camelcase в случае если нужно написать с тире
+
+Можно динамически рендерить по условию части кода, если запихать их в условия внутри render:
+
+render() {
+
+let code = null
+
+if (state.something === true) {
+code = (
+<div>
+</div>)
+}
+
+
+Для передачи scoped стилей можно использовать библиотеку Radiant, либо подключить (в новых версиях для этого не требуется eject) модули CSS, и тогда они подключаются так:
+import classes from './App.css'
+
+className = classes.App
+
+
+
+LIFECYCLE HOOKS:
+constructor(props) {
+	super(props)
+	this.state = {
+	}
+} - вызывается при создании класса
+
+getDerivedStateFromProps(props, state) {
+} - вызывается после создания state
+
+shouldComponentUpdate(nextProps, nextState) {
+} - можно решить, нужно ли апдейтить на этом компоненте
+
+render() {
+} - непосредственно рендерит компонента
+
+componentDidMount() {
+} - компонент полностью собран и отрендерен
+
+
+getSnapshotBeforeUpdate(prevProps, prevState) {
+} - хук на момент перед самым изменением компонента
+
+componentDidUpdate() {
+} - компонент отререндерился
+
+componentWillReceiveProps(props) {
+} - хук удален в новых версиях, не использовать
+
+
+
+ФИЧИ, УМЕНИЯ, РЕНДЕР
+Возможность менять компонент по нажатию
+<input ref={(element) => { textInput=element;}} type="text" placeholder="Color"/>
+            <button onClick={() => {currentColor = textInput.value;}}>OK</button>
+
+React.memo(render) - ????
+
+
+
+<React.Fragment></React.Fragment> - можно оборачивать соседствующие теги, чтобы не оборачивать все в компоненте в единый Div
+
+Higher order components
+
+ref={() => {}} - Refs, что делают? ХЗ БЛЯ
+
+context - ????

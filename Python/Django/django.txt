@@ -1,0 +1,33 @@
+Start a project:
+django-admin startproject projectname
+
+python manage.py startapp appname - start app
+
+urls.py:
+
+path(r'url' views.smth);
+r - означает что в url можно ставить обратные слеши
+
+
+
+
+
+Query:
+from models import SMTH
+SMTH.objects.all()
+SMTH.objects.filter()
+s=SMTH(some_text="yes")
+s.SMTH.objects.get(pk=3) - pk instead of ID, so it will be truly
+
+
+from django.forms.models import model_to_dict
+for some in SMTH.objects.all():
+	print(model_to_dict(some))
+
+
+
+
+request.user.is_staff, is_superuser, is_authenticated()
+
+
+raise Htp404 (from django.http)

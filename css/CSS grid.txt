@@ -1,0 +1,85 @@
+display: grid
+
+
+
+grid-template-columns: % % % - три колонны каждая по x%, либо repeat(3, 30% или как хочешь)
+grid-template-rows: % % % - три ряда каждый по x%
+grid-template: 50% 50% / 20% 20% 20% 20% 20%; rows/columns
+
+grid-row-gap - промежуток между cells в grid по горизонтали
+grid-column-gap - тот же промежуток, по вертикали
+Браузеры поддерживают и grid-gap, column-gap
+Если указать только один, а второй не указать - он получит свойства из второго
+
+Если указать в каждом из элементов внутри grid свойство grid-area, то в самом grid container можно управлять размером этих вещей (см. пример 1)
+
+
+
+
+Единицы измерения: ph em % fr
+fr - fractions - разделяет грид на равные доли, например 2 и 5 - разделит на 7 долей.
+
+
+grid-column-start - где будет находиться колонна в гриде, span тоже можно
+grid-column-end - где колонна заканчивается (можно span x, где x = +x от начала)
+grid-column: 4/6 (ряды с 4 по 5) (span тоже работает)
+grid-row-start, grid-row-end, grid-row - аналогично
+grid-area: row-start/column-start/row-end/column-end
+
+Можно присваивать отрицательные значения чтобы обозначить точку с конца
+
+
+order: 1; (настройка порядка, 1 идет после 0 и т.д.)
+
+
+Размещение всех клеток\содержимого внутри:
+justify-items - все клетки по горизонтали start, end, center, stretch;
+align-items - все клетки по вертикали start, end, center, stretch;
+place-items - оба, align / justify; либо сразу значение - будет применяться к обоим осям
+
+
+Размещение самой grid внутри container:
+justify-content - горизонталь, start, end, center, stretch, space-around, space-between, space-evenly
+align-content - аналогично, вертикаль
+place-content - аналогично оба
+
+
+Размещение внутри клеток:
+justify-self - по горизонтали, start, end, center, stretch;
+align-self - по вертикали, start, end, center, stretch;
+place-self - оба, align / justify; либо сразу значение - будет применяться к обоим осям
+
+
+grid-auto-columns, grid-auto-rows - определяет размер новых колонок и рядов, которые создаются автоматически если содержимое не помещается
+
+grid-auto-flow - опредяет, куда попадают вещи которым не назначено где им быть на сетке; возможные значения: row - заполнение рядов, добавление новых рядов в случае полной заполненности; column - заполнять колонками и добавлять колонки автоматически; dense - попытка заполнять все свободные промежутки рядами; column dense - то же самое, но колонками
+
+
+
+
+
+
+
+ПРИМЕР 1:
+.item-a {
+  grid-area: header;
+}
+.item-b {
+  grid-area: main;
+}
+.item-c {
+  grid-area: sidebar;
+}
+.item-d {
+  grid-area: footer;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "header header header header"
+    "main main . sidebar"
+    "footer footer footer footer";
+}

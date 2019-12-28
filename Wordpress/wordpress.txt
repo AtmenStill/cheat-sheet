@@ -1,0 +1,33 @@
+Алгоритм:
+1) Создать домен на локальном сервере
+2) Создать бд и пользователя на локальном сервере в phpmyadmin
+3) Скачать Wordpress, перенести его в домен
+4) Ввести данные из phpmyadmin в Wordpress при установке
+5) Зайти в wordpress админку с помощью логина и пароля (domain/wp-admin)
+6) Сайт = тема. Создать свою тему = создать папку в wp-content/themes
+7) Там assets и index.php. В index.php можно делать все что угодно как в index.
+8) CSS и прочие устанавливаются в assets или куда-либо еще, подключаются через wp_head и add_action в functions.php
+
+
+<wp_header()> - подключить вещи из fuctions в header; для footer все то же самое wp_footer()
+
+Чтобы подключить что-либо:
+Создать файл functions.php
+В нем:
+<?php 
+add_action('wp_enqueue_scripts', 'theme_name_styles');
+
+function theme_name_styles() {
+    wp_enqueue_style('the_style', get_template_directory_uri().'/assets/css/style.css');
+}
+?>
+
+Вместо wp_enqueue_style и get_template_directory_uri() для скриптов wp_enqueue_script()
+
+
+
+Чтобы вставить что-то в путь (типа картинок) в index.php: 
+
+src="<?php bloginfo('template_url');?>/src/pics/pic.img"
+
+bloginfo() - дает сведения о некоторых частях сайта; можно подставить имя или что-нибудь еще

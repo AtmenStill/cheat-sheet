@@ -1,0 +1,7 @@
+ssh-keygen -t rsa -b 4096 -C "atmenstill@gmail.com" - создать ключи ssh, по протоколу rsa, -b битов 4096 -C команда 
+
+eval "$(ssh-agent -s)" - запустить работу ssh
+
+ssh-add -k ~/.ssh/id_rsa - создать путь к файлу
+
+cat ~/.ssh/id_rsa.pub - вывести публичный ключ для вставки куда-нибудь

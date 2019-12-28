@@ -1,0 +1,33 @@
+Помощь:
+
+git help config (или любая другая команда)
+git add --help
+
+
+Первоначальные параметры:
+
+git config --global user.name
+git config --global user.email
+git config --list
+
+Проверка:
+Зайти в папку с гитовой шнягой
+git status
+
+Коммиты:
+git commit -m "message"
+
+git add FILENAME
+git commit FILENAME -m "message" to commit one file
+
+git commit -a -m "message" to commit all
+
+
+Добыть проект:
+git clone url place
+
+
+
+Branching:
+checkout -b branchname - checkout with creating
+branch branchname - just create this one branch

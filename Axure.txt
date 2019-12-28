@@ -1,0 +1,9 @@
+ctrl + g - group
+ctrl + or -    - resize
+
+
+
+shift + arrow keys - move it somewhere
+Just arrows - move 1px
+
+space - grab mode

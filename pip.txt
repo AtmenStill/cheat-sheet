@@ -1,0 +1,5 @@
+pip freeze -> req.txt - создаст список установленных зависимостей в файле requirements.txt
+
+
+
+pip install -r req.txt - установит все зависимости из сформированного файла requirements.txt

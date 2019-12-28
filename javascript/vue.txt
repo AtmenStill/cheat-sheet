@@ -1,0 +1,491 @@
+УСТАНОВКА:
+npm i -g vue (???)
+vpm i -g vue-cli
+vue create projectname (vue3)
+vue init webpack-simple projectname (vue2)
+npm run dev
+
+Как делается:
+
+функция (объект) вот так:
+
+<input type="text" v-model="name"> /*что будет введено в поле name появится в {{name}}*/
+
+<div class="class">Wow, {{name}}</div>
+
+
+Стандартная структура:
+new Vue ({
+el: 'class\id',
+data: {
+	showH2: false,
+	value: 5,
+	ingredients: ['meat', 'fruit', 'cookies'],
+	persons: [{name: Max, age: 28}, {name: Anna, age: 'unknown'}]
+}
+methods: {
+	someMethod: function() {
+		return something;
+	}
+}
+computed: {
+	something: function() {
+		}
+	} - происходит пересчет ТОЛЬКО когда происходит 
+watch: {
+	data-something: function(value) {
+		something to happen
+	} - когда изменяется значение data-something, исполнить следующий код
+}
+props: {
+
+} - подача компонентов, см. компоненты
+directives: {
+
+} - создание локальных директив, см. директивы
+filters: {
+
+} - разнообразные фильтры, применяемые к значениям, см. фильтры
+});
+
+<div class="class">
+<button v-on:click="showH2=!showH2">Button</button>
+<h2 v-show="showH2">Hello, my baby, hello my honey</h2>
+</div>
+
+
+
+
+ДИРЕКТИВЫ:
+v-model - реактивное изменение одной точки чтобы изменились другие;
+<input type="text" v-model="name"> /*что будет введено в поле name появится в {{name}}*/
+
+Модификаторы:
+.lazy - не меняет значение данных, пока не закончишь тыкать и не кликнешь где-нибудь еще
+.trim - обрезаются пробелы с обеих сторон
+.number - любая строка превращается в число
+
+
+v-bind - вставить значение в параметр внутри HTML тега; shortcut: : (пример: :title)
+Пример:
+<input type="text" v-bind:value="name"> /*что было введено в {{name}} появится в поле value, а значит в самой строке input*/
+v-bind:title="title" (всплывающая подсказка)
+v-bind:title="showH2 ? 'Hide' : 'Show'"
+v-bind:href="link"
+v-bind:class="{'red': attachRed, 'blue': !attachRed}", где attachRed - это boolean, и появление класса red зависит от этого булеан; можно поместить все в computed и записать как class="divClasses"; а сам divClasses: function() {return {red: this.attachRed, blue: !this.attachRed}}
+Array is also plausible:
+v-bind: style="[myStyle, {height: width + 'px'}]"
+
+keywords for v-bind:
+is - подключает\привязывает не просто дату, а компонент внутрь тега <component>
+class - ???
+
+
+
+v-on - подписка на события, чтобы что-то менялось когда тут меняется; shortcut: @ (пример: @click)
+
+Существующие listeners: 
+click - клик мышью
+input - ввод в поле
+mousemove - движение мышью
+keyup - нажатие любой клавиши
+
+Существующие modifiers (Пример: v-on:mousemove.stop; их можно заводить в цепь, пример: v-on:mousemove.stop.prevent): 
+Общие:
+.stop - останавливает использование mousemove из других listeners
+.prevent - не будет происходить стандартного события, только привязанное через v-on
+.native - событие можно использовать на созданных динамически элементах, и обращение будет тоже по этому элементу
+
+Для keyup (тоже можно садить в цепь, в основном диктует какие клавиши используются для события):
+enter - энтер
+space - пробел
+    
+    
+    .capture
+    .self
+    .once
+    .passive
+
+Пример:
+<input type="text" v-bind:value="name" v-on:input="name=$event.target.value"> /*Позволяет подписаться на событие input; чтобы при инпуте присваивать name то что в поле value этого таргета*/
+v-on:click="showH2=!showH2"
+v-on:click="increase"; methods: {increase: function() {this.counter++;}}
+
+
+
+v-show="js code" - позволяет показывать или скрывать этот тэг (через display: none), если результат кода равен True
+
+
+
+v-html - исполняет html код внутри тега
+Пример:
+<p v-html="insertLink"></p>
+insertLink = <a href="hell.forge">Big Dick</a> - this HTML will be inserted and working
+
+
+v-for перебирает код
+Пример:
+<ul class="list-group">
+<li"list-group-item" v-for="(number, i) in numbers"> {{number}}, {{i}}</li>
+</ul>
+Где number - перечисление элементов numbers, а i - index (key) предмета в массиве
+
+<template v-for="(number, i) in numbers>
+	<p>{{number}}</p>
+	<h1>{{i}}</h1}
+</template>
+Можно итерировать просто по числам, v-for="n in 10"
+
+v-for="ingredient in ingredients" :key="ingredient" - проверит нет ли уже такого элемента, не будет итерировать его много раз (не уверен)
+
+
+v-once - исполняет рендер только один раз
+Пример:
+<h1 v-once>{{ title }}</h1>
+
+
+
+v-if - позволяет существовать тегу если равен True
+Пример:
+<p v-if="show">Now you are empty</p>
+Если переключить show, то весь тег p исчезнет, со всем содержимым
+
+v-else - если результат предыдущего v-if не равен True, то проявляется этот (но он должен идти в следующем по списку теге на том же уровне)
+Если хочется использовать сразу много элементов для этого, можно использовать тег <template> который не будет никак виден в html коде
+
+
+
+Создание директивы:
+В main.js файле, использовать
+Vue.directive('directiveName', {
+}); - создает директиву, которая вызывается через v-derictiveName
+
+
+Хуки для директивы
+bind(el, binding, vnode) - когда происходит первое привязывание
+inserted()
+update()
+componentUpdated()
+unbind()
+
+Пример полного использования:
+Vue.directive('highlight', {
+  bind(el, binding, vnode) {
+    // el.style.backgroundColor = binding.value;
+    if (binding.arg == 'background') {
+      el.style.backgroundColor = binding.value;
+    } else {
+      el.style.color = binding.value;
+    }
+  }
+});
+binding.value - это то что идет после =, highlight="value"
+binding.arg - то, что идет после двоеточия highligh:arg
+binding.modifiers['modName'] - то, что идет после точки; v-highlight:arg.modName
+v-highlight:background="'red'"
+
+Обширное использование:
+'local-highlight': {
+                bind(el, binding, vnode) {
+                        // el.style.backgroundColor = binding.value;
+                        var delay = 0;
+                        if (binding.modifiers['delayed']) {
+                        delay=binding.value.delay;
+                        }
+                        if (binding.modifiers['blink']) {
+                        let mainColor = binding.value.mainColor;
+                        let secondColor = binding.value.secondColor;
+                        let currentColor = mainColor;
+                        setTimeout(() => {
+                            setInterval(() => {
+                            currentColor == secondColor ? currentColor = mainColor : currentColor = secondColor;
+                            if (binding.arg == 'background') {
+                                el.style.backgroundColor = currentColor;
+                            } else {
+                                el.style.color = currentColor;
+                            }
+                            }, 1000);
+                            
+                        }, delay);
+                        } else {
+                        setTimeout(()=> {
+
+                        
+                            if (binding.arg == 'background') {
+                            el.style.backgroundColor = binding.value;
+                            } else {
+                            el.style.color = binding.value;
+                            }
+                        }, delay);
+                        }
+                        
+                    
+                }
+            }
+
+<p v-local-highlight:background.delayed.blink="{mainColor: 'red', secondColor: 'green', delay: 500}">And also this</p>
+
+
+КОМПОНЕНТЫ:
+Data обязательно должен быть функцией а не объектом. Иначе при переиспользовании компонента будет обращаться к одному и тому же объекту и в итоге поменяются все.
+
+Чтобы vue код файла использовался как компонент, обязательно нужно использовать
+export default {
+	data: function() {
+},
+	methods: {
+}
+}
+
+Глобальный вид:
+Vue.component('cmp', {
+data: function() {
+	return {
+		something: 'Something',
+}},
+template: '<p>Output here: {{something}}</p>'
+});
+В JS файле указать так:
+Vue.component('my-cmp', cmp);
+
+Локальный вид:
+var cmp =  {
+data: function() {
+	return {
+		something: 'Something',
+}},
+template: '<p>Output here: {{something}}</p>'
+};
+Для локального вида в шаблоне Vue нужно добавить так:
+new Vue({
+	el: '#app',
+	components: 'my-cmp': cmp
+}) - и тогда можно внутри указывать <my-cmp></my-cmp>
+
+В html коде:
+<cmp></cmp> - можно много раз, оно останется таким же
+
+
+
+
+Подключение в Vue:
+import FileName from FileName.vue
+
+
+
+Использование data других компонентов:
+Внутри компонента где будет использовать, например user-cmp, внутри export default указать props{propName: String},
+Далее внутри подающего компонента указать так: <user-cmp v-bind:propName="propName"></user-cmp>, где propName находится внутри data подающего компонента
+
+props: {
+	propName: {
+		type: String,
+		default: 'Some String',
+		required: True
+	}
+}
+NB: required is not needed if you have default;
+NB1: you can change prop inside a child function and pass this information to a parent, or make a function in parent that will change data for both child and parent and call it from inside the child
+
+
+Стили:
+<style scoped> - применение стилей только по отношению к текущему шаблону Vue
+
+</style>
+
+
+Подача html кода из родительского в компонент:
+<component>
+	<some-html></some-html>
+</component>
+
+Внутри самого компонента:
+<template>
+<div>
+<slot>
+</slot>
+</div>
+</template>
+
+Тег slot отвечает за отображение html внутри компонента; можно задать атрибут name - <slot name="kek"></slot>
+И задать внутри тегов в родиельском шаблоне отношение к слоту: <h1 slot="kek"></h1>
+
+
+<component></component> - компонент, который можно привязывать через v-bind:is
+<keep-alive></keep-alive> - этим можно обернуть тег component, чтобы тот не уничтожался при переключении is
+
+
+СОБЫТИЯ:
+В методе:
+this.$event('eventName', this.propName) - thisPropname изменился, об этом надо просигнализировать; this.propName подается как переменная $event, 
+Внутри родительского компонента можно установить листенер на встроенный компонент
+<user-cmp v-bind:propName="propName" @eventName="propName = $event"></user-cmp>
+
+
+
+
+
+ХУКИ:
+Пример- destroyed() {some action} - наравне с data, methods, props и т.д.
+
+destroyed() - действие когда компонент\инстанс Vue уничтожается
+deactivated() - действие когда инстанс не уничтожен, но исчез из поля зрения (работат только с <keep-alive>)
+activated() - действие, когда инстанс реактивирован после деактивации (работат только с <keep-alive>)
+
+
+beforeRouteEnter(to, from, next) {
+next();
+} - хук который возникает перед запуском компонента в router, пропускает дальше только если в next подается true (по умолчанию)
+
+beforeRouteLeave(to, from, next) {next();} - аналогично beforeRouteEnter, но перед уходом со страницы
+
+
+
+.header .main-logo {
+    max-width: 160px;
+    .header .main-logo img {
+        width: 160px;}
+@media (min-width: 768px) and (max-width: 991px) {
+    .header .main-logo {
+        margin-right: 10px; } }
+@media (max-width: 767px) {
+    .header .main-logo {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 100%;
+        /* max-width: 100px; */
+        margin-right: 0;
+        transform: translateY(-10px); }
+
+        }
+        .header .main-logo img {
+            max-width: 200px !important;
+            max-height: 200px !important;
+            height: 90px !important;
+            width: 90px !important;}
+
+
+
+
+
+
+ФИЛЬТРЫ:
+Объявляется в main.js (общий) через Vue.filter('filtername') или локально (в filters)
+Пример (локальный):
+filters: {
+	toUppercase(value) {
+                return value.toUpperCase();
+            }
+}
+Пример (глобальный): 
+Vue.filter('to-lowercase', function(value) {
+  return value.toLowerCase();
+});
+
+В тексте: {{text | toUppercase | to-lowercase}}
+
+
+
+
+
+МИКСИНЫ:
+Создается файл mixinName.js
+В нем export const somemixinName = { код вставляемого кода }
+В файле где вставить
+import { somemixinName } from "./mixinName.js"
+
+в export default {
+	mixins: [somemixinName]
+}
+
+
+
+
+
+АНИМАЦИИ:
+существует тег <transition name="" type="" mode="out-in" (или mode="in-out") appear></transition>, внутри тега можно настроить плавный переход
+Внутри него дается name="name", в стилях назначаются стили:
+.name-enter {
+} - какие стили подаются при самом начале запуска (например, opacity: 0;)
+.name-enter-active {
+} - какая анимация делается все остальные кадры при запуске в одну сторону, например transition: opacity 1s; устанавливать opacity: 1; не нужно поскольку она default
+.name-leave {
+} - аналогично кадр при уходе, opacity: 1 не нужно ибо установлено default
+.name-leave-active {
+} - аналогично остальное время при уходе, opacity 1s; opacity: 0; (нужно и то и другое потому что не default)
+Разрешается сделать type="animation" чтобы первой происходила анимация, а потом transition
+appear проигрывает анимацию при создании страницы
+mode="out-in" - сначала первый исчезает, второй проявляется после; in-out делает наоборот
+Нельзя использовать два анимируемых элемента внутри одного transition, но можно использовать их если они используют разные условия для v-if; чтобы анимация происходила плавно всем элементам внутри transition надо присвоить key. Пример:
+<transition name="kek">
+	<div v-if="show" key="waffer1"></div>
+	<div v-else key="waffer2"></div>
+</transition>
+
+У анимаций также есть хуки.
+
+Дополнительный тег
+<transition-group tag="">
+</transition-group>
+
+tag - в каком теге рендерить transition group, по умолчанию span
+	
+
+
+
+
+
+
+
+
+
+VUE ROUTER:
+vue-router - создает роуты, возможность SPA
+Устанавливается vue-router
+Подключается как import VueRouter from 'vue-router' в main.js
+Там же import { routes } from './routes.js'
+Vue.use(VueRouter);
+const router = new VueRouter({
+	routes: routes;
+})
+
+В routes.js:
+Пример:
+import User from './components/user/User.vue';
+import Home from './components/Home.vue'
+export const routes = [
+    {path: '/', component: Home },
+    {path: '/user', component: User }
+
+]
+
+Компоненты подгружаются в теге <router-view></router-view>
+
+Тег <router-link to="/">Something</router-link> - позволяет создать относительную ссылку без пересылания запросов на сервер
+Пример:
+<router-link to="/" tag="li" active-class="active" exact><a>Home</a></router-link>
+        <router-link to="/user" tag="li" active-class="active"><a>User</a></router-link>
+
+tag="li" - в какой тэг превратить
+active-class - какой класс применять к активной ссылке
+exact - применять активный класс только если адресная строка полностью соответствует пути; в противном случае будет выделяться частичное совпадение (./ и ./user для "/")
+
+
+узнать параметр из строки:
+"user/:id"
+this.$route.params.id
+
+
+
+ПОДКЛЮЧЕНИЕ СТОРОННИХ МОДУЛЕЙ:
+В main.js
+import VueResource from 'vue-resource';
+Vue.use(VueResource);
+
+Vue.http.options.root = 'https://url' - позволяет подключить адрес для post и get запросов в команду this.$http.get('url', data) (или post)

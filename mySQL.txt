@@ -1,0 +1,164 @@
+Все происходит в Директории
+
+
+Запуск и вырубание:
+mysqld.exe --console
+mysql -u root -p THEN ENTER PASSWORD
+mysqladmin -u root -p shutdown
+
+
+
+Проверка:
+mysqladmin --version
+SHOW DATABASES;
+USE Databasename ? This will be used to select a database in the MySQL workarea.
+
+SHOW DATABASES ? Lists out the databases that are accessible by the MySQL DBMS.
+
+SHOW TABLES ? Shows the tables in the database once a database has been selected with the use command.
+
+SHOW COLUMNS FROM tablename: Shows the attributes, types of attributes, key information, whether NULL is permitted, defaults, and other information for a table.
+
+SHOW INDEX FROM tablename ? Presents the details of all indexes on the table, including the PRIMARY KEY.
+
+SHOW TABLE STATUS LIKE tablename\G ? Reports details of the MySQL DBMS performance and statistics.
+
+
+Auth and other:
+mysqladmin -u root password "new_password"
+
+
+
+Работа с базами:
+use BASENAME
+mysqladmin -u root -p create BASENAME; query will be CREATE DATABASE TUTORIALS
+
+mysqladmin -u root -p drop TUTORIALS - deletion of base! query DROP DATABASE TUTORIALS
+
+ CREATE TABLE tutorials_tbl(tutorial_id INT NOT NULL AUTO_INCREMENT, tutorial_title VARCHAR(100) NOT NULL,tutorial_author VARCHAR(40) NOT NULL, submission_date DATE,PRIMARY KEY ( tutorial_id )); - creation of a table
+
+DROP TABLE tablename - deletion of a table
+
+INSERT INTO table_name ( field1, field2,...fieldN ) VALUES  ( value1, value2,...valueN );
+
+SELECT field, field, field FROM table, table WHERE conditions OFFSET N LIMIT M ORDER BY field 1, field 2 - обычный селект, разве что Offset позволяет начать возвращать данные не с первого значения, и limit позволяет огрничить количество допустимых возвращаемых значений, order by позволяет расположить все по порядку одного из полей
+
+
+UPDATE tablename SET field 1 = something, field 2 = something WHERE conditions for row
+E.G. UPDATE tutorials_tbl SET tutorial_title = 'Learning JAVA' WHERE tutorial_id = 3;
+
+DELETE FROM tablename WHERE conditions for row - deleting one row; if there is no WHERE then whole table will be deleted
+
+
+SELECT * FROM tablename INTO OUTFILE '/pathname/some.txt'; - export table to some file outside; 
+
+
+
+use mysql
+INSERT INTO user (host, user, password, select_priv, insert_priv, update_priv) VALUES ('localhost', 'guest', PASSWORD('guest123'), 'Y', 'Y', 'Y'); FLUSH PRIVILEGES; mysql> SELECT host, user, password FROM user WHERE user='guest'
+
+
+INSERT INTO user (host, user, select_priv, insert_priv, update_priv, ssl_cipher) VALUES ('localhost', 'guest', 'Y', 'Y', 'Y', 'NULL');
+INSERT INTO user (Host,User,ssl_cipher,x509_issuer,x509_subject, select_priv, insert_priv, update_priv) VALUES ('localhost', 'guest','','','', 'Y', 'Y', 'Y');
+
+
+
+Создать юзверя:
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+
+FLUSH PRIVILEGES;
+
+
+
+
+PHP:
+mysql_connect(server, user, pass, new_link, client_flag)
+server - localhost or whatever, default - localhost: 3306
+user - username to connect
+pass - password to connect
+new_link - if there are more mysql_connect with the same args, other connections will not connect, but will return identifiers instead
+client_flags - MYSQL_CLIENT_SSL ? Use SSL encryption.
+
+MYSQL_CLIENT_COMPRESS ? Use compression protocol.
+
+MYSQL_CLIENT_IGNORE_SPACE ? Allow space after function names.
+
+MYSQL_CLIENT_INTERACTIVE ? Allow interactive timeout seconds of inactivity before closing the connection.
+
+
+mysql_close(param) - param will be the connection returned by mysql_connect;
+
+mysql_select_db(name, connection) - select a database
+
+mysql_query(sql, connection)
+sql - needed query, create base or make other query
+connection - which connection to use\
+
+possible queries - many, can operate tables, can create tables and many more
+
+
+
+
+ALL PHP QUERIES RETURN BOOL, TO SHOW IF SUCCESSFUL
+
+
+<html>
+   <head>
+      <title>Connecting MySQL Server</title>
+   </head>
+   <body>
+      <?php
+         $dbhost = 'localhost:3306';
+         $dbuser = 'guest';
+         $dbpass = 'guest123';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+         
+         if(! $conn ) {
+            die('Could not connect: ' . mysql_error());
+         }
+         echo 'Connected successfully';
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+
+
+
+<html>
+   <head>
+      <title>Creating MySQL Database</title>
+   </head>
+   
+   <body>
+      <?php
+         $dbhost = 'localhost:3036';
+         $dbuser = 'root';
+         $dbpass = 'rootpassword';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+         
+         if(! $conn ) {
+            die('Could not connect: ' . mysql_error());
+         }
+         echo 'Connected successfully<br />';
+         $sql = 'CREATE DATABASE TUTORIALS';
+         $retval = mysql_query( $sql, $conn );
+         
+         if(! $retval ) {
+            die('Could not create database: ' . mysql_error());
+         }
+         echo "Database TUTORIALS created successfully\n";
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+
+
+
+
+
+ИНТЕРЕСНЫЕ ПРИМОЧКИ:
+В поле для дат ввести NOW() - вернет текущую дату и отправит в эту ячейку
+
+tutorial_id INT NOT NULL AUTO_INCREMENT - Auto increment позволяет автоматически для каждого значения увеличивать поле на 1, в данном случае id

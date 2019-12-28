@@ -1,0 +1,19 @@
+Ключевое слово transition; пример:
+
+transition: opacity 1s - меняет opacity на нужную за 1 секунду
+
+
+transform
+
+
+translate
+
+
+animation: animationName 1s ease-out forwards; - использует анимацию из keyframes, 1 секунда, медленно начинается, движется только в одном направлении (forwards)
+
+
+@keyframes animationName {
+from {
+	transform: something;}
+to {
+	transform: something(+10);}

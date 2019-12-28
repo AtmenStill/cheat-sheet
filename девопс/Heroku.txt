@@ -1,0 +1,26 @@
+heroku keys:add - добавляет и аплоадит ключи в хероку для создания ssh связи
+
+Чтобы запустить проект на Хероку, в корне проекта использовать:
+heroku create project-name
+
+В package.json в поле scripts нужно прописать следующий скрипт: 
+
+"start": "node src/app.js"
+
+Это позволит Heroku развернуть приложение у себя, поскольку start означает путь к файлу который надо запустить
+
+Чтобы получить хостовый порт от Хероку:
+const port = process.env.PORT
+
+app.listen(port, () => {
+    console.log('Server is up on port' + port)
+})
+
+
+Чтобы запушить в Хероку:
+git push heroku master (имя ветки)
+
+
+Чтобы добавить переменные окружения:
+heroku config:set key=value ; key = value это ключ и его значение в конфигах
+heroku config:unset key - удалить переменную key

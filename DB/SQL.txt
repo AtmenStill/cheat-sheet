@@ -1,0 +1,29 @@
+
+
+SELECT some_column, some_column2 FROM some_table
+
+SELECT some_column, some_column2 FROM some_table WHERE
+CONDITION AND/OR CONDITION
+
+
+
+
+Operators:
+=, !=, <, <=, >, >= - Standart numericals
+BETWEEN X AND Y - select numbers within range
+NOT BETWEEN X AND Y - select all that not in this range
+IN - exact numbers in a list if they exist, e.g. IN (1, 4, 6)
+NOT IN - the same, but numbers excluded
+
+Operators for comparing text:
+=, != or <> - case sensitive thing
+LIKE, NOT LIKE - case insensitive thing
+% - find match inside any string, used with LIKE or NOT LIKE
+- - find match with single character, used with LIKE or NOT LIKE
+IN - string exists in a list
+NOT IN - string doesn't exist
+
+SELECT Id, Title FROM movies WHERE Id = 6;
+
+
+CREATE DATABASE "NAME"

@@ -1,0 +1,4 @@
+C:\Users\Eschaton\mongodb\bin\mongod.exe --dbpath=\Users\Eschaton\mongodb-data
+Запустить сервер Монго, с указанием пути к базе данных для данного инстанса
+
+mongodb://127.0.0.1:27017/task-manager-api

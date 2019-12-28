@@ -1,0 +1,16 @@
+
+
+
+LOOPS:
+var i;
+for (i = 0; i < kek, i++) {
+	i = kek + fuck
+}
+
+Filter function - returns array filtered based on a function inside
+array.filter(function(word) {if (word !=0) {return word}}
+
+
+
+
+fetch('address') - асинхронный запрос который забирает значение со страницы

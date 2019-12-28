@@ -1,0 +1,128 @@
+ѕеременные:
+Dim Text As String
+Text = "something"
+
+Set Text = New (в случае если не было Dim) "Something" Nothing (в случае если хотим отв€зать это значение от всех остальных переменных)
+Dim Text As String: Text = "something"
+
+Dim somearray(1 To 20) As Long
+Dim Somearray()s
+
+“ипы данных:
+String
+Integer
+Long (big numbers)
+Double (presicion)
+Boolean
+Date
+Range
+Workbook
+
+¬ывод\¬вод:
+
+MsgBox "Something"
+Debug.Pring "Something"
+kek = inputBox("Ќапиши что ты хочешь получить")
+
+
+—войства:
+Rows.Count - сколько вообще существует строк
+Workbook.Name
+ThisWorkbook
+ActiveWorkbook
+ThisWorksheet
+ActiveWorksheet
+something.End(xlUp).select
+something.End(xlToRight).select - прыгнуть на первую\последнюю €чейку этого р€да
+
+LBound - нижн€€ граница массива
+UBound - верхн€€
+
+
+ячейки:
+Cells(1, 6) или как там = Kek (подает в эту €чейку значение Kek), €чейка A6
+Range("A1:E10") = туда сюда и вообще вставить
+
+
+ќсобые методы:
+With somethingsomething
+ .kek
+ .kek 2
+ .lel
+End With
+
+
+activerange.offset(2, 2) - сдвинутьс€ вниз и вправо на 2 и 2 соответственно
+
+If Something = kek Then
+
+	walawala
+
+End If
+
+If Something = kek or Other = Kek Then
+
+	walawala
+
+End If
+
+
+
+Do While Something = kek
+
+
+Loop
+
+
+Do something
+
+
+Loop While Something= kek
+
+
+
+Do Until Something = kek
+
+
+Loop
+
+X<Y
+X>Y
+X<=Y
+X>=Y
+X=Y
+X<>Y
+
+
+For i = 1 to 10
+	что-нибудь i - перебирает i
+Next i
+
+For Each Kek in Range("A1:D10") (он дает Kek поочередно значение каждой €чейки в Range)
+	Wut=Wut+kek
+Next Kek
+
+
+
+¬ызов процедур:
+
+Call Module1.procedure1
+
+
+
+
+
+
+
+ѕолезные сабы:
+Sub RemoveSpaces_2()
+Set Kek = Worksheets("X").Cells(3, 3)
+
+Do While Kek.Value <> ""
+    temp = Kek.Value
+    Kek.Value = Replace(Kek.Value, Space(2), "")
+    Kek.Select
+    Set Kek = ActiveCell.Offset(1, 0)
+Loop
+
+End Sub

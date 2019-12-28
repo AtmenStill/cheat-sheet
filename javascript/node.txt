@@ -1,0 +1,70 @@
+ИМПОРТ\ЭКСПОРТ:
+
+полный импорт - require('/filename')
+Импорт штуки - import function from 'filename';
+Экспорт на случай нужды в чем-то - module.exports
+
+
+
+Библиотека process:
+process.argv - все аргументы, поданные в программу при запуске. Первый и второй (0 и 1) - путь ноды и путь к запущенному файлу
+process.
+
+
+
+
+Библиотека express:
+res.send - создать сообщение на странице
+res.render - отрендерить готовый шаблон
+
+Создание страницы:
+app.get('/', (req,res) => {
+    res.render('pageName', {
+        title: '???',
+	anotherThing: '???'
+    })
+})
+PageName goes from views place
+
+
+Страница 404:
+app.get('*', (req,res) => {
+        res.send('404 page')
+}) - можно также по стандартному пути перенаправление на страницу 404
+
+
+Запуск сервера:
+app.listen(3000, () => {
+    console.log('Server is up on 3000 port.')
+})
+
+
+
+
+Библиотека handlebars (hbs):
+const hbs require('hbs')
+Установка путей и views:
+	app.set('views engine', 'hbs') - стандартный функционал ноды, устанавливает каким движком views пользуется
+	app.set('views', pathToViews) - путь к views
+	hbs.registerPartials(pathToPartials) - позволяет установить путь к partials - reusable сегментам html кода
+
+Partials:
+Внутри шаблона html: {{>partialName}} - без использования расширения файла, просто 
+
+
+
+
+
+
+Список полезных библиотек:
+request - простые реквесты
+express - простой рендер страниц
+handlebars - простой движок для view
+
+
+
+
+
+
+
+
